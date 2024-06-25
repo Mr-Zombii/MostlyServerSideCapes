@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "mostly_server_capes",
+	"version": "${version}",
+	"name": "MostlyServerSideCapes",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Mr_Zombii!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/Mr-Zombii/MostlyServerSideCapes"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/mostly_server_capes/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.zombii.mostly_server_capes.MostlyServerCapes"
+		],
+		"client": [
+			"me.zombii.mostly_server_capes.MostlyServerCapesClient"
+		]
+	},
+	"mixins": [
+		"mostly_server_capes.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

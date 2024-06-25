@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "me.zombii.mostly_server_capes.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerListS2CPacketMixin",
+    "ServerConfigurationNetworkHandlerAccessor",
+    "ServerPlayerEntityMixin",
+    "ServerPlayNetworkHandlerMixin",
+    "TextureUrlCheckerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}
