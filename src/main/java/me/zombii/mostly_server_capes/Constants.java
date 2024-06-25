@@ -3,6 +3,7 @@ package me.zombii.mostly_server_capes;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 
+import java.util.Random;
 import java.util.Set;
 
 public class Constants {
@@ -15,5 +16,6 @@ public class Constants {
             "27c5d8e7-889c-4c40-b63c-c1d54db72580" // Mr_Zombii
     );
 
+    public static final Random random = new Random();
 
 }

@@ -5,7 +5,6 @@
   "mixins": [
     "PlayerListS2CPacketMixin",
     "ServerConfigurationNetworkHandlerAccessor",
-    "ServerPlayerEntityMixin",
     "ServerPlayNetworkHandlerMixin",
     "TextureUrlCheckerMixin"
   ],

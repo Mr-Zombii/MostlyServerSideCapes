@@ -1,6 +1,7 @@
 package me.zombii.mostly_server_capes.mixin.client;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+import me.zombii.mostly_server_capes.Constants;
 import org.apache.commons.io.FilenameUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,6 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
+import java.util.Random;
 
 @Mixin(MinecraftProfileTexture.class)
 public class HASH_FIX {

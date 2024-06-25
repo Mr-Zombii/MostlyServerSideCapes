@@ -6,12 +6,9 @@ import com.google.gson.JsonPrimitive;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import me.zombii.mostly_server_capes.MostlyServerCapes;
-import me.zombii.mostly_server_capes.network.PlayerEntityAccess;
 import me.zombii.mostly_server_capes.network.PlayerListS2CPacketEntriesUpdater;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.PacketCallbacks;
-import net.minecraft.network.encryption.NetworkEncryptionException;
-import net.minecraft.network.encryption.NetworkEncryptionUtils;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket.Action;
@@ -26,7 +23,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-import java.security.*;
 import java.util.*;
 
 @Mixin(ServerPlayNetworkHandler.class)
@@ -58,8 +54,6 @@ public abstract class ServerPlayNetworkHandlerMixin extends ServerCommonNetworkH
                         newProfile.getProperties().putAll(entry.profile().getProperties());
                         setCustomCapeInGameProfile(newProfile);
                         profile = newProfile;
-
-                        ((PlayerEntityAccess) this.player).mostlyServerSideCapes$setProfile(profile);
                     }
                     entries.add(new Entry(entry.profileId(), profile, entry.listed(),
                             entry.latency(), entry.gameMode(), entry.displayName(),
@@ -94,12 +88,11 @@ public abstract class ServerPlayNetworkHandlerMixin extends ServerCommonNetworkH
             textures.getAsJsonObject("textures").add("CAPE", capeObject);
         }
         capeObject.remove("alias");
-        capeObject.addProperty("alias", String.valueOf(new Date().getTime()));
+        capeObject.addProperty("alias", String.valueOf(new Date().getTime() / new Random().nextLong(1, new Date().getTime())));
         capeObject.remove("url");
         capeObject.addProperty("url", MostlyServerCapes.CONFIG.getPlayerCape(gameProfile));
 
         textures.remove("signatureRequired");
-        textures.add("signatureRequired", new JsonPrimitive(true));
 
         String newTextures = Base64.getEncoder().encodeToString(textures.toString().getBytes());
         Property newTexturesProperty = new Property("textures", newTextures);
