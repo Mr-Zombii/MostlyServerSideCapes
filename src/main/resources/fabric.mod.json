@@ -3,12 +3,11 @@
 	"id": "mostly_server_capes",
 	"version": "${version}",
 	"name": "MostlyServerSideCapes",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A simple mod to bring capes storage to the server & small things to the client.",
 	"authors": [
 		"Mr_Zombii!"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/Mr-Zombii/MostlyServerSideCapes"
 	},
 	"license": "CC0-1.0",
@@ -23,7 +22,11 @@
 		]
 	},
 	"mixins": [
-		"mostly_server_capes.mixins.json"
+		"mostly_server_capes.mixins.json",
+		{
+			"environment": "client",
+			"config": "mostly_server_capes.client.mixins.json"
+		}
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",

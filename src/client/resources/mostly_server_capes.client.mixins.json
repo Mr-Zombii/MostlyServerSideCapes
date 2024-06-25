@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "me.zombii.mostly_server_capes.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "HASH_FIX"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "InvertedPlayerMixin",
+    "PlayerListEntryMixin"
+  ]
+}

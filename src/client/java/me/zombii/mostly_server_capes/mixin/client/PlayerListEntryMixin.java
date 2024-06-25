@@ -1,4 +1,4 @@
-package me.zombii.sssm.mixin.client;
+package me.zombii.mostly_server_capes.mixin.client;
 
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.SkinTextures;
