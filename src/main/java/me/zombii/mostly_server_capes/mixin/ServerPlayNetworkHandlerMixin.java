@@ -67,25 +67,9 @@ public abstract class ServerPlayNetworkHandlerMixin extends ServerCommonNetworkH
                 }
                 ((PlayerListS2CPacketEntriesUpdater) playerListS2CPacket).capeCommand$setEntries(
                         entries);
-
-                this.server.getPlayerManager().getPlayerList().forEach(player -> {
-                    if (player != null) {
-                        if (player != this.player) {
-                            player.networkHandler.send(fixPacket(entries), callbacks);
-                        }
-                    }
-                });
             }
         }
         super.send(packet, callbacks);
-    }
-
-    @Unique
-    private PlayerListS2CPacket fixPacket(List<Entry> entries) {
-        EnumSet<Action> enumSet = EnumSet.of(Action.INITIALIZE_CHAT, Action.UPDATE_GAME_MODE, Action.UPDATE_LISTED, Action.UPDATE_LATENCY);
-        PlayerListS2CPacket playerListS2CPacket = new PlayerListS2CPacket(enumSet, List.of());
-        ((PlayerListS2CPacketEntriesUpdater) playerListS2CPacket).capeCommand$setEntries(entries);
-        return playerListS2CPacket;
     }
 
     @Unique
