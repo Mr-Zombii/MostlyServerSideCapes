@@ -14,6 +14,7 @@ public class Commands {
 
     static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment env) {
         CapeSetterCommand.registerCapeCommand(dispatcher, registryAccess, env);
+        SkinSetterCommand.registerSkinCommand(dispatcher, registryAccess, env);
     }
 
 }

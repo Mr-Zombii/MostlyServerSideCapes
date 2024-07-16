@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import static me.zombii.mostly_server_capes.MostlyServerCapes.CONFIG;
+import static me.zombii.mostly_server_capes.MostlyServerCapes.CAPE_CONFIG;
 import static me.zombii.mostly_server_capes.MostlyServerCapes.LOGGER;
 
 public class CapeSetterCommand {
@@ -35,14 +35,14 @@ public class CapeSetterCommand {
             if (getCapeFromURL(url) == null) throw new SimpleCommandExceptionType(Text.of("Cape does not exist, try another url or provider")).create();
 
             ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
-            if (!CONFIG.hasCapeCommand(player)) {
-                throw new SimpleCommandExceptionType(Text.of("This cape requires you to install the Cape Command mod locally.")).create();
+            if (!CAPE_CONFIG.hasCapeCommand(player)) {
+                throw new SimpleCommandExceptionType(Text.of("This cape requires you to install the MostlyServerSideCapes mod locally.")).create();
             }
 
-            CONFIG.setPlayerCape(context.getSource()
+            CAPE_CONFIG.setPlayerCape(context.getSource()
                     .getPlayerOrThrow().getGameProfile(), url);
 
-            String clientNote = "Note that this cape is only visible to you and other players that have Cape Command installed.";
+            String clientNote = "Note that this cape is only visible to you and other players that have MostlyServerSideCapes installed.";
             context.getSource().sendFeedback(() -> Text.of(
                     "Cape saved. Relog for it to apply. "
                             + clientNote), true);
@@ -51,7 +51,7 @@ public class CapeSetterCommand {
         static void registerCapeCommand(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment env) {
             LOGGER.info("Initialising cape command");
             LOGGER.info("Trying to load config, if it exists");
-            CONFIG.readFromConfig();
+            CAPE_CONFIG.readFromConfig();
 
             LOGGER.info("Registering cape command");
 
@@ -116,7 +116,7 @@ public class CapeSetterCommand {
                             })))
                     .then(CommandManager.literal("reset")
                             .executes(context -> {
-                                CONFIG.resetPlayerCape(context.getSource()
+                                CAPE_CONFIG.resetPlayerCape(context.getSource()
                                         .getPlayerOrThrow().getGameProfile());
                                 context.getSource().sendFeedback(() -> Text.of(
                                         "Cape reset. Relog for it to apply."), true);
