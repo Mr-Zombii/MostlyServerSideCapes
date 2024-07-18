@@ -2,11 +2,13 @@ package me.zombii.mostly_server_capes.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import me.zombii.mostly_server_capes.CapeCommandSuggestionProvider;
 import me.zombii.mostly_server_capes.Capes;
+import me.zombii.mostly_server_capes.MostlyServerCapes;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -16,6 +18,7 @@ import net.minecraft.text.Text;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Objects;
 
 import static me.zombii.mostly_server_capes.MostlyServerCapes.CAPE_CONFIG;
 import static me.zombii.mostly_server_capes.MostlyServerCapes.LOGGER;
@@ -46,16 +49,17 @@ public class CapeSetterCommand {
             context.getSource().sendFeedback(() -> Text.of(
                     "Cape saved. Relog for it to apply. "
                             + clientNote), true);
+
         }
 
-        static void registerCapeCommand(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment env) {
+        static void registerCapeCommand(LiteralArgumentBuilder<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment env) {
             LOGGER.info("Initialising cape command");
             LOGGER.info("Trying to load config, if it exists");
             CAPE_CONFIG.readFromConfig();
 
             LOGGER.info("Registering cape command");
 
-            dispatcher.register(CommandManager.literal("cape")
+            dispatcher.then(CommandManager.literal("cape")
                     .requires(ServerCommandSource::isExecutedByPlayer)
                     .then(CommandManager.literal("providers")
                                     .then(CommandManager.literal("skinmc").executes(context -> {
@@ -70,25 +74,12 @@ public class CapeSetterCommand {
                                     }))
                                     .then(CommandManager.literal("minecraftapi").executes(context -> {
                                         String url = String.format("https://minecraftapi.net//api//v2//profile//%s//capes//minecraftcapes", context.getSource().getPlayer().getUuid());
-//                            String url = String.format("https://minecraftapi.net//api//v2//profile//%s//capes//minecraftcapes", context.getSource().getPlayer().getUuid());
                                         setCapeFromUrl(context, url);
                                         return 0;
                                     }))
                                     .then(CommandManager.literal("minecraftcapes").executes(context -> {
                                         String url = String.format("https://api.minecraftcapes.net/profile/%s/cape", context.getSource().getPlayer().getUuid().toString().replaceAll("-", ""));
                                         setCapeFromUrl(context, url);
-//                            System.out.println(url);
-//                            if (getCapeFromURL(url) == null) throw new SimpleCommandExceptionType(Text.of("Cape does not exist, try another url or provider")).create();
-//
-//                            try {
-//                                Map son = new Gson().fromJson(new String(getCapeFromURL(url).readAllBytes()), Map.class);
-//                                String capeUrl = "data:image/png;base64," + ((Map) son.get("textures")).get("cape");
-//                                System.out.println(capeUrl);
-//                                setCapeFromDataUrl(context, capeUrl);
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                                throw new SimpleCommandExceptionType(Text.of("Cape does not exist, try another url or provider")).create();
-//                            }
                                         return 0;
                                     }))
                     )

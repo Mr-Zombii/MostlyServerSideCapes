@@ -3,9 +3,11 @@
   "package": "me.zombii.mostly_server_capes.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "FabricTailorCompatMixin",
     "PlayerListS2CPacketMixin",
     "ServerConfigurationNetworkHandlerAccessor",
     "ServerPlayNetworkHandlerMixin",
+    "TailorNetworkHandlerMixin",
     "TextureUrlCheckerMixin"
   ],
   "injectors": {

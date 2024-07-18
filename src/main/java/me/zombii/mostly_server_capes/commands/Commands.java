@@ -1,6 +1,7 @@
 package me.zombii.mostly_server_capes.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
@@ -13,8 +14,10 @@ public class Commands {
     }
 
     static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment env) {
-        CapeSetterCommand.registerCapeCommand(dispatcher, registryAccess, env);
-        SkinSetterCommand.registerSkinCommand(dispatcher, registryAccess, env);
+        LiteralArgumentBuilder<ServerCommandSource> dispatcher2 = CommandManager.literal("mostlyserversidecapes");
+        CapeSetterCommand.registerCapeCommand(dispatcher2, registryAccess, env);
+        SkinSetterCommand.registerSkinCommand(dispatcher2, registryAccess, env);
+        dispatcher.register(dispatcher2);
     }
 
 }
