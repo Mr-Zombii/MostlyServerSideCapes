@@ -65,11 +65,15 @@ public class FabricTailorCompatMixin {
                                     textureData.get("SKIN").getAsJsonObject().get("url").getAsString(),
                                     type
                             );
-                            MostlyServerCapes.LOGGER.info(texturesJson + " " + skinObj + " " + model);
                         }
                         if (textureData.get("CAPE") != null)
                             MostlyServerCapes.CAPE_CONFIG.setPlayerCape(player.getGameProfile(), textureData.get("CAPE").getAsJsonObject().get("url").getAsString());
                         //                        ((TailoredPlayer) player).fabrictailor_setSkin(skinData, true);
+
+                        String clientNote = "Note that this cape/skin is only visible to you and other players that have MostlyServerSideCapes installed.";
+                        player.sendMessageToClient(Text.of(
+                                "Cape/Skin saved. Relog for it to apply. "
+                                        + clientNote), true);
                     }
                     player.sendMessageToClient(TextTranslations.create("command.fabrictailor.skin.set.success").formatted(Formatting.GREEN), false);
                 }
